@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="create-purchase-order-log-table" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="purchase_order_log"/>
+            </not>
+        </preConditions>
+        <createTable tableName="purchase_order_log">
+            <column name="order_rec_id" type="BIGINT"/>
+            <column name="created_date" type="VARCHAR(255)"/>
+            <column name="created_time" type="VARCHAR(255)"/>
+            <column name="destination_partner" type="VARCHAR(255)"/>
+            <column name="flow_type" type="VARCHAR(255)"/>
+            <column name="order_number" type="VARCHAR(255)"/>
+            <column name="request_type" type="VARCHAR(255)"/>
+            <column name="source_partner" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="created_rec_at" type="TIMESTAMP"/>
+        </createTable>
+        <addPrimaryKey columnNames="order_rec_id" constraintName="purchase_order_log_pkey" tableName="purchase_order_log"/>
+    </changeSet>
+
+    <changeSet id="create-purchase-order-log-sequence" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="purchase_order_log_order_rec_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="purchase_order_log_order_rec_id_seq"
+                        incrementBy="1"
+                        minValue="1"
+                        maxValue="9223372036854775807"
+                        startValue="1"
+                        cacheSize="1"/>
+        <addDefaultValue tableName="purchase_order_log" columnName="order_rec_id" defaultValueComputed="nextval('purchase_order_log_order_rec_id_seq'::regclass)"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="create_shipment_confirm_log_table" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="shipment_confirm_log"/>
+            </not>
+        </preConditions>
+        <!-- Create shipment_confirm_log table -->
+        <createTable tableName="shipment_confirm_log">
+            <column name="sc_rec_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="created_at" type="timestamp(6)"/>
+            <column name="delivery_number" type="varchar(255)"/>
+            <column name="flow_type" type="varchar(255)"/>
+            <column name="shipment_number" type="varchar(255)"/>
+            <column name="status" type="bool"/>
+            <column name="file_name" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="create-shipment-confirm-log-sequence" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="shipment_confirm_log_sc_rec_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="shipment_confirm_log_sc_rec_id_seq"
+                        incrementBy="1"
+                        minValue="1"
+                        maxValue="9223372036854775807"
+                        startValue="1"
+                        cacheSize="1"/>
+        <addDefaultValue tableName="shipment_confirm_log" columnName="sc_rec_id" defaultValueComputed="nextval('shipment_confirm_log_sc_rec_id_seq'::regclass)"/>
+    </changeSet>
+
+</databaseChangeLog>

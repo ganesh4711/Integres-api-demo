@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <include file="liquibase/primary_ds/changelog/create-alerts-changelog.xml"/>
+    <include file="liquibase/primary_ds/changelog/create-audit-data-changelog.xml"/>
+    <include file="liquibase/primary_ds/changelog/create-processed-file-entry-changelog.xml"/>
+    <include file="liquibase/primary_ds/changelog/create-goods-receipt-log-changelog.xml"/>
+    <include file="liquibase/primary_ds/changelog/create-inventory-sync-log-changelog.xml"/>
+
+    <include file="liquibase/primary_ds/changelog/create-product-master-data-changelog.xml"/>
+    <include file="liquibase/primary_ds/changelog/create-purchase-order-log-changelog.xml"/>
+    <include file="liquibase/primary_ds/changelog/create-purchase-order-item-log-changelog.xml"/>
+
+    <include file="liquibase/primary_ds/changelog/create-purchase-order-master-changelog.xml"/>
+    <include file="liquibase/primary_ds/changelog/create-purchase-order-item-master-changelog.xml"/>
+
+    <include file="liquibase/primary_ds/changelog/create-shipment-out-master-changelog.xml"/>
+    <include file="liquibase/primary_ds/changelog/create-shipment-out-item-master-changelog.xml"/>
+
+    <include file="liquibase/primary_ds/changelog/create-shipment-confirm-log-changelog.xml"/>
+
+    <include file="liquibase/primary_ds/changelog/create-adjustment-log-changelog.xml"/>
+
+
+
+    <!--    -->
+</databaseChangeLog>
+
+

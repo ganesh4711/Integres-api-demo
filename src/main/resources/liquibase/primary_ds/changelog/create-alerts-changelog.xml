@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="create-alerts-table" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="alerts"/>
+            </not>
+        </preConditions>
+        <createTable tableName="alerts">
+            <column name="id" type="BIGINT" >
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="alert_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="issue_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subject" type="VARCHAR(250)"/>
+            <column name="message" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sender" type="VARCHAR(250)"/>
+            <column name="recipient" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="send_status" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="resolved_status" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="attempt_count" type="INTEGER"/>
+            <column name="processed_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="create-alerts-sequence" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="alerts_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="alerts_seq"
+                        incrementBy="50"
+                        minValue="1"
+                        maxValue="9223372036854775807"
+                        startValue="1"
+                        cacheSize="1"/>
+    </changeSet>
+</databaseChangeLog>

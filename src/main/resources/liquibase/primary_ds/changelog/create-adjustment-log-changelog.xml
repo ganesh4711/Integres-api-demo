@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="create-adjustment-log-table" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="adjustment_log"/>
+            </not>
+        </preConditions>
+        <createTable tableName="adjustment_log">
+            <column name="adj_rec_id" type="BIGINT" autoIncrement="true" startWith="1"/>
+            <column name="note" type="VARCHAR(255)"/>
+            <column name="created_date" type="VARCHAR(255)"/>
+            <column name="movement_type" type="VARCHAR(255)"/>
+            <column name="quantity" type="INT"/>
+
+            <column name="from_product_id" type="VARCHAR(255)"/>
+            <column name="from_plant_id" type="VARCHAR(255)"/>
+            <column name="from_storage_location" type="VARCHAR(255)"/>
+            <column name="from_item_valuation" type="VARCHAR(255)"/>
+
+            <column name="to_product_id" type="VARCHAR(255)"/>
+            <column name="to_plant_id" type="VARCHAR(255)"/>
+            <column name="to_storage_location" type="VARCHAR(255)"/>
+            <column name="to_item_valuation" type="VARCHAR(255)"/>
+
+            <column name="created_rec_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="create_purchase_order_master_table" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="purchase_order_master"/>
+            </not>
+        </preConditions>
+        <createTable tableName="purchase_order_master">
+            <column name="order_rec_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="created_date" type="varchar(255)"/>
+            <column name="created_time" type="varchar(255)"/>
+            <column name="destination_partner" type="varchar(255)"/>
+            <column name="flow_type" type="varchar(255)"/>
+            <column name="order_number" type="varchar(255)"/>
+            <column name="request_type" type="varchar(255)"/>
+            <column name="source_partner" type="varchar(255)"/>
+            <column name="status" type="varchar(255)"/>
+            <column name="updated_date" type="varchar(255)"/>
+            <column name="updated_time" type="varchar(255)"/>
+            <column name="created_rec_at" type="timestamp"/></createTable>
+    </changeSet>
+    <changeSet id="create-purchase-order-master-sequence" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="purchase_order_master_order_rec_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="purchase_order_master_order_rec_id_seq"
+                        incrementBy="1"
+                        minValue="1"
+                        maxValue="9223372036854775807"
+                        startValue="1"
+                        cacheSize="1"/>
+        <addDefaultValue tableName="purchase_order_master" columnName="order_rec_id" defaultValueComputed="nextval('purchase_order_master_order_rec_id_seq'::regclass)"/>
+    </changeSet>
+</databaseChangeLog>

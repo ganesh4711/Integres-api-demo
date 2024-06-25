@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="create-inventory-sync-log-table" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="inventory_sync_log"/>
+            </not>
+        </preConditions>
+        <createTable tableName="inventory_sync_log">
+            <column name="is_rec_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="inventory_sync_log_pkey"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP(6)"/>
+            <column name="file_name" type="VARCHAR(255)"/>
+            <column name="flow_type" type="VARCHAR(255)"/>
+            <column name="status" type="BOOLEAN"/>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-inventory-sync-sequence" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="inventory_sync_log_is_rec_id_seq"/>
+            </not>
+        </preConditions>
+    <createSequence sequenceName="inventory_sync_log_is_rec_id_seq"
+                    incrementBy="1"
+                    minValue="1"
+                    maxValue="9223372036854775807"
+                    startValue="1"
+                    cacheSize="1"/>
+        <addDefaultValue tableName="inventory_sync_log" columnName="is_rec_id" defaultValueComputed="nextval('inventory_sync_log_is_rec_id_seq'::regclass)"/>
+    </changeSet>
+</databaseChangeLog>

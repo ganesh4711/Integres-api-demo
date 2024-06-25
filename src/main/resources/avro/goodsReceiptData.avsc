@@ -1,0 +1,60 @@
+{
+  "type" : "record",
+  "name" : "GoodsReceiptData",
+  "namespace" : "com.integrations.orderprocessing.kafka.schema",
+  "fields" : [ {
+    "name" : "docNum",
+    "type" : "string"
+  }, {
+    "name" : "orderDetails",
+    "type" : {
+      "type" : "record",
+      "name" : "GROrderDetails",
+      "fields" : [ {
+        "name" : "items",
+        "type" : {
+          "type" : "array",
+          "items" : {
+            "type" : "record",
+            "name" : "GRItem",
+            "fields" : [ {
+              "name" : "grId",
+              "type" : "long"
+            }, {
+              "name" : "gr_rec_id",
+              "type" : "long"
+            }, {
+              "name" : "itemNumber",
+              "type" : "string"
+            }, {
+              "name" : "itemValuationType",
+              "type" : "string"
+            }, {
+              "name" : "plantId",
+              "type" : "string"
+            }, {
+              "name" : "productId",
+              "type" : "string"
+            }, {
+              "name" : "quantity",
+              "type" : "int"
+            }, {
+              "name" : "storageLocation",
+              "type" : "string"
+            } ]
+          },
+          "java-class" : "java.util.List"
+        }
+      }, {
+        "name" : "orderNumber",
+        "type" : "string"
+      } ]
+    }
+  }, {
+    "name" : "orderReceivedDate",
+    "type" : "string"
+  }, {
+    "name" : "referenceNumber",
+    "type" : "string"
+  } ]
+}

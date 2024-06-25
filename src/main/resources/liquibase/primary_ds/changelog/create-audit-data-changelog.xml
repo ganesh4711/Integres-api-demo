@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="create-audit-data-table" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="audit_data"/>
+            </not>
+        </preConditions>
+        <createTable tableName="audit_data">
+            <column name="id" type="BIGInt">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="process_date" type="TIMESTAMP(6)"/>
+            <column name="user_id" type="VARCHAR"/>
+            <column name="channel" type="VARCHAR"/>
+            <column name="ip" type="VARCHAR"/>
+            <column name="status" type="VARCHAR"/>
+            <column name="process_ref_num" type="VARCHAR"/>
+            <column name="message" type="TEXT"/>
+            <column name="flow_type" type="VARCHAR"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="create-audit-data-sequence" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="audit_data_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="audit_data_seq"
+                        incrementBy="50"
+                        minValue="1"
+                        maxValue="9223372036854775807"
+                        startValue="1"
+                        cacheSize="1"/>
+    </changeSet>
+</databaseChangeLog>

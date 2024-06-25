@@ -1,0 +1,144 @@
+{
+  "type" : "record",
+  "name" : "ShpmntConfInData",
+  "namespace" : "com.integrations.orderprocessing.kafka.schema",
+  "fields" : [ {
+    "name" : "bolNumber",
+    "type" : "string"
+  }, {
+    "name" : "deliveryDetails",
+    "type" : {
+      "type" : "record",
+      "name" : "DeliveryDetails",
+      "fields" : [ {
+        "name" : "carrierTrackingDetails",
+        "type" : {
+          "type" : "record",
+          "name" : "CarrierTrkgDlvry",
+          "fields" : [ {
+            "name" : "containerNumber",
+            "type" : "string"
+          }, {
+            "name" : "customerLoadId",
+            "type" : "string"
+          }, {
+            "name" : "manifestNumber",
+            "type" : "string"
+          }, {
+            "name" : "parcelTrackNumber",
+            "type" : "string"
+          }, {
+            "name" : "proNumber",
+            "type" : "string"
+          }, {
+            "name" : "sealNumber",
+            "type" : "string"
+          }, {
+            "name" : "totalNoofWMSShipmentsInTruck",
+            "type" : "int"
+          } ]
+        }
+      }, {
+        "name" : "deliveryNumber",
+        "type" : "string"
+      }, {
+        "name" : "goodsIssueToDelivery",
+        "type" : {
+          "type" : "record",
+          "name" : "ShpmentConfInGoodsActvtsIssueToDlvry",
+          "fields" : [ {
+            "name" : "shippedDeliveryDate",
+            "type" : "string"
+          } ]
+        }
+      }, {
+        "name" : "partnerDetails",
+        "type" : {
+          "type" : "record",
+          "name" : "PartnerDetails",
+          "fields" : [ {
+            "name" : "parcelType",
+            "type" : "string"
+          } ]
+        }
+      }, {
+        "name" : "plantId",
+        "type" : "string"
+      }, {
+        "name" : "shipmentConfirmationItems",
+        "type" : {
+          "type" : "array",
+          "items" : {
+            "type" : "record",
+            "name" : "ShpmntConfInItem",
+            "fields" : [ {
+              "name" : "deliveryStatus",
+              "type" : "string"
+            }, {
+              "name" : "itemLabelDetailsList",
+              "type" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "record",
+                  "name" : "ItemLabelDetails",
+                  "fields" : [ {
+                    "name" : "cartonLabelId",
+                    "type" : "string"
+                  }, {
+                    "name" : "labelType",
+                    "type" : "string"
+                  }, {
+                    "name" : "palletLabelId",
+                    "type" : "string"
+                  }, {
+                    "name" : "palletNumber",
+                    "type" : "string"
+                  }, {
+                    "name" : "quantity",
+                    "type" : "int"
+                  } ]
+                },
+                "java-class" : "java.util.List"
+              }
+            }, {
+              "name" : "itemNumber",
+              "type" : "string"
+            }, {
+              "name" : "productId",
+              "type" : "string"
+            }, {
+              "name" : "quantity",
+              "type" : "int"
+            }, {
+              "name" : "serialNumbers",
+              "type" : {
+                "type" : "array",
+                "items" : "string",
+                "java-class" : "java.util.List"
+              }
+            } ]
+          },
+          "java-class" : "java.util.List"
+        }
+      }, {
+        "name" : "storageLocation",
+        "type" : "string"
+      }, {
+        "name" : "totalPackagesInDelivery",
+        "type" : "int"
+      }, {
+        "name" : "totalWeight",
+        "type" : "float"
+      } ]
+    }
+  }, {
+    "name" : "docNum",
+    "type" : "string"
+  }, {
+    "name" : "sc_rec_id",
+    "type" : "long"
+  }, {
+    "name" : "shipmentNumber",
+    "type" : "string"
+  } ]
+}

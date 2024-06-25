@@ -1,0 +1,25 @@
+# Use the official Amazon Corretto OpenJDK image for the runtime
+FROM maven:3.9-amazoncorretto-17-al2023 AS builder
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the project source code into the container
+COPY . .
+
+# Build the project using Maven
+RUN mvn clean package -Pstage
+
+# Use a lightweight base image with the same JDK version
+FROM amazoncorretto:17-alpine-jdk
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the built JAR file from the previous stage into the container
+COPY --from=builder /app/target/IntegrationsApiDemo-0.0.1-SNAPSHOT.jar /app/IntegrationsApiDemo.jar
+
+# Define the command to run the application
+CMD ["java", "-jar", "IntegrationsApiDemo.jar"]
+
+

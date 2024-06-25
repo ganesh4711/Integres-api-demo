@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="create-purchase-order-item-log-table" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="purchase_order_item_log"/>
+            </not>
+        </preConditions>
+        <createTable tableName="purchase_order_item_log">
+            <column name="item_rec_id" type="BIGINT"/>
+            <column name="action" type="VARCHAR(255)"/>
+            <column name="created_date" type="VARCHAR(255)"/>
+            <column name="created_time" type="VARCHAR(255)"/>
+            <column name="item_number" type="VARCHAR(255)"/>
+            <column name="product_id" type="VARCHAR(255)"/>
+            <column name="quantity" type="REAL"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="valuation_type" type="VARCHAR(255)"/>
+            <column name="warehouse_id" type="VARCHAR(255)"/>
+            <column name="order_rec_id" type="BIGINT"/>
+        </createTable>
+
+        <addPrimaryKey columnNames="item_rec_id" constraintName="purchase_order_item_log_pkey" tableName="purchase_order_item_log"/>
+
+        <addForeignKeyConstraint baseColumnNames="order_rec_id"
+                                 baseTableName="purchase_order_item_log"
+                                 constraintName="fk41u1j2bfr7957ji3qdu9hedto"
+                                 referencedColumnNames="order_rec_id"
+                                 referencedTableName="purchase_order_log"/>
+    </changeSet>
+
+    <changeSet id="create-purchase-order-item-log-sequence" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="purchase_order_item_log_item_rec_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="purchase_order_item_log_item_rec_id_seq"
+                        incrementBy="1"
+                        minValue="1"
+                        maxValue="9223372036854775807"
+                        startValue="1"
+                        cacheSize="1"/>
+        <addDefaultValue tableName="purchase_order_item_log" columnName="item_rec_id" defaultValueComputed="nextval('purchase_order_item_log_item_rec_id_seq'::regclass)"/>
+    </changeSet>
+
+</databaseChangeLog>

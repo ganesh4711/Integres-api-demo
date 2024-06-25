@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="create-product-master-data-table" author="Admin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="product_master_data"/>
+            </not>
+        </preConditions>
+        <createTable tableName="product_master_data">
+            <column name="product_id" type="VARCHAR(255)"/>
+            <column name="is_serializable" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comm_imp_code_n" type="DOUBLE"/>
+            <column name="country_of_origin" type="VARCHAR(255)"/>
+            <column name="ean" type="BIGINT"/>
+            <column name="estim_gross_weight_lb" type="DOUBLE"/>
+            <column name="export_control" type="VARCHAR(255)"/>
+            <column name="height_in" type="DOUBLE"/>
+            <column name="item_catg_group" type="VARCHAR(255)"/>
+            <column name="length_in" type="DOUBLE"/>
+            <column name="origin" type="VARCHAR(255)"/>
+            <column name="product_description" type="VARCHAR(255)"/>
+            <column name="sharp_product_department" type="INTEGER"/>
+            <column name="sharp_product_line" type="VARCHAR(255)"/>
+            <column name="small_parcel" type="VARCHAR(255)"/>
+            <column name="width_in" type="DOUBLE"/>
+        </createTable>
+        <addPrimaryKey columnNames="product_id" constraintName="product_master_data_pk" tableName="product_master_data"/>
+    </changeSet>
+
+</databaseChangeLog>
