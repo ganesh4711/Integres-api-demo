@@ -27,32 +27,14 @@ jobs:
 
     - name: Build Docker Image
       run: docker build -t $IMAGE_NAME:latest -f Dockerfile.stage .
-
-    # - name: Automatic Tagging of Releases
-    #   id: increment-git-tag
-    #   run: |
-    #     bash ./scripts/git_update.sh -v major
     
     - name: Configure Docker Client
       run: |-
         gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
 
-    # - name: Tag and Push image to GCP Artifact Registry
-    #   env:
-    #     GIT_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
-    #   run: |-
-    #     docker tag $IMAGE_NAME:latest us-central1-docker.pkg.dev/$PROJECT_ID/$ARTIFACT_REG/$IMAGE_NAME:latest
-    #     docker tag $IMAGE_NAME:latest us-central1-docker.pkg.dev/$PROJECT_ID/$ARTIFACT_REG/$IMAGE_NAME:$GIT_TAG
-    #     docker push us-central1-docker.pkg.dev/$PROJECT_ID/$ARTIFACT_REG/$IMAGE_NAME:latest
-    #     docker push us-central1-docker.pkg.dev/$PROJECT_ID/$ARTIFACT_REG/$IMAGE_NAME:$GIT_TAG
-
-    # - name: Extract Git Tag
-    #   run: echo "GIT_TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
-
     - name: Tag and Push image to GCP Artifact Registry
       env:
         IMAGE_TAG: ${{ github.sha }}
-        # GIT_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
       run: |-
         echo "IMAGE_TAG_TEMP=$IMAGE_TAG" >> $GITHUB_ENV
         docker tag $IMAGE_NAME:latest us-central1-docker.pkg.dev/$PROJECT_ID/$ARTIFACT_REG/$IMAGE_NAME:$IMAGE_TAG
@@ -64,7 +46,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         token: ${{ secrets.REPO_TOKEN }}
-        repository: SiyyadriShiva/integres-api-hc  # Specify the secondary repository
+        repository: ganesh4711/integres-api-hc  # Specify the secondary repository
         path: integres-api-hc                 # The path where the repository will be checked out
         # ref: integres-api-stage-deploy  # Replace with your branch name
 
@@ -73,8 +55,8 @@ jobs:
         set -e
         {
           cd integres-api-hc
-          git config --global user.name 'SiyyadriShiva'
-          git config --global user.email 'shiva.vasi2007@gmail.com'
+          git config --global user.name 'ganesh4711'
+          git config --global user.email 'ssganesh471@gmail.com'
           sed -i 's|APP_VERSION:.*|APP_VERSION: '${{env.IMAGE_TAG_TEMP}}'|' values-stage.yaml
           git add values-stage.yaml
           git commit -m "Update values-stage.yaml"
@@ -87,7 +69,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         token: ${{ secrets.REPO_TOKEN }}
-        repository: SiyyadriShiva/integres-api-hc  # Specify the secondary repository
+        repository: ganesh4711/integres-api-hc  # Specify the secondary repository
         path: integres-api-hc                 # The path where the repository will be checked out
         # ref: integres-api-stage-deploy  # Replace with your branch name
 
@@ -99,9 +81,6 @@ jobs:
     - name: Clean destination directory on VM
       run: |
           ssh -T -o StrictHostKeyChecking=no vasi@35.239.35.122 -p 22 "rm -rf ~/se-integrations/integres-api-stage/*"
-
-    # - name: List directories in $GITHUB_WORKSPACE
-    #   run: ls -R $GITHUB_WORKSPACE
 
     - name: Copy files to VM
       run: |
